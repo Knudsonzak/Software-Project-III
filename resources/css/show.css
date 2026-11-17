@@ -1,0 +1,18 @@
+@import "./base.css";
+
+.profile-header { display: flex; align-items: center; gap: 18px; padding: 30px; background: #fbfcff; }
+.avatar-large { width: 64px; height: 64px; border-radius: 17px; font-size: 25px; }
+.profile-header h2 { margin-bottom: 5px; font-size: 20px; letter-spacing: -.03em; }
+.profile-header p { margin-bottom: 10px; color: #7a8799; font-size: 13px; }
+.details-section { display: grid; grid-template-columns: 1fr 2fr; gap: 35px; padding: 30px; border-top: 1px solid #edf0f5; }
+.details-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; margin: 0; }
+.details-grid dt { margin-bottom: 8px; color: #8a97a8; font-size: 12px; font-weight: 600; }
+.details-grid dd { margin: 0; overflow-wrap: anywhere; color: #26354d; font-size: 14px; font-weight: 600; }
+.danger-zone { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 24px; padding: 24px 28px; border: 1px solid #f1dddd; border-radius: 12px; background: #fff; }
+.danger-zone h2 { margin-bottom: 6px; font-size: 15px; }
+.danger-zone p { margin-bottom: 0; color: #7a8799; font-size: 13px; line-height: 1.5; }
+@media (max-width: 700px) {
+    .details-section { grid-template-columns: 1fr; gap: 22px; }
+    .danger-zone { align-items: flex-start; flex-direction: column; }
+}
+@media (max-width: 450px) { .details-grid { grid-template-columns: 1fr; } }

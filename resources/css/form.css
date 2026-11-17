@@ -1,0 +1,20 @@
+.form-card { max-width: 960px; }
+.form-section { display: grid; grid-template-columns: 1fr 2fr; gap: 35px; padding: 30px; }
+.form-section + .form-section { border-top: 1px solid #edf0f5; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.field { display: flex; min-width: 0; flex-direction: column; gap: 8px; }
+.field label { color: #35435a; font-size: 13px; font-weight: 700; }
+.field label > span:not(.optional) { color: #be4545; }
+.optional { margin-left: 4px; color: #9aa5b4; font-size: 11px; font-weight: 500; }
+.field input, .field select { width: 100%; min-height: 43px; padding: 10px 12px; border: 1px solid #dce3ed; border-radius: 7px; background: #fff; color: #233149; }
+.field input:hover, .field select:hover { border-color: #b9c6d9; }
+.field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: #d96f6f; }
+.field-hint { color: #8995a5; font-size: 12px; line-height: 1.4; }
+.field-error { color: #b53535; font-size: 12px; line-height: 1.4; }
+.form-actions { display: flex; justify-content: flex-end; gap: 10px; padding: 20px 30px; border-top: 1px solid #edf0f5; background: #fbfcfe; }
+@media (max-width: 700px) { .form-section { grid-template-columns: 1fr; gap: 22px; } }
+@media (max-width: 450px) {
+    .form-section { padding: 24px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-actions { padding: 20px 24px; }
+}

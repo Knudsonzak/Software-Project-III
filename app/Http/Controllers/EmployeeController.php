@@ -10,8 +10,9 @@ class EmployeeController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
+    { 
+        $employees = collect([]);
+        return view('dashboard', compact('employees'));
     }
 
     /**
