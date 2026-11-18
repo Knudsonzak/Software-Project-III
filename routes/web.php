@@ -8,5 +8,5 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::post('/login', [AuthController::class, 'signin'])->name('signin');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/dashboard', [EmployeeController::class, 'index']);
