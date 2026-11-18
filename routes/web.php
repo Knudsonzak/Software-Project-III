@@ -2,13 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
-    return view('welcome');
-<<<<<<< HEAD
-})->name('main');
-=======
+    return view('login');
 });
 
+Route::post('/login', [AuthController::class, 'signin'])->name('signin');
 Route::get('/dashboard', [EmployeeController::class, 'index']);
->>>>>>> 1c9bfdd604d5c6484f8a660028117008f493ac7c
