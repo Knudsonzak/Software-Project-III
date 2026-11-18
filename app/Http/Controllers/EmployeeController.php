@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -36,7 +37,22 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = Auth::user();
+
+        if(!$user){
+            return redirect()->route('main');
+        }
+
+        if($user->role == 'admin'){
+
+        }
+        /*
+        - Get the user role 
+            - if they are an admin they can proceed
+            - else get their emp_id and match it with the id in the url
+            - if they match let them through otherwise send them back to some page
+
+        */
     }
 
     /**
