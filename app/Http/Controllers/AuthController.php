@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -16,8 +16,8 @@ class AuthController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        $employee = Employee::where('email', $request->email)->first();
+        if (!$employee || !Hash::check($request->password, $employee->password)) {
             if (!$request->expectsJson()) {
                 return back()->withErrors([
                     'email' => 'The email or password is incorrect.',
@@ -28,18 +28,23 @@ class AuthController extends Controller
         }
 
         if (!$request->expectsJson()) {
-            Auth::login($user);
+            Auth::guard('web')->login($employee);
             $request->session()->regenerate();
 
             return redirect()->intended(route('dashboard'));
         }
 
-        $token = $user->createToken('api')->plainTextToken;
+        $token = $employee->createToken('api')->plainTextToken;
 
         return response()->json([
             'message' => 'Signed in.',
             'token' => $token,
-            'user' => $user->only(['id', 'name', 'email', 'created_at', 'last_logged_in']),
+            'user' => [
+                'id' => $employee->emp_id,
+                'name' => $employee->name,
+                'email' => $employee->email,
+                'created_at' => $employee->created_at,
+            ],
         ], 200);
     }
 }
