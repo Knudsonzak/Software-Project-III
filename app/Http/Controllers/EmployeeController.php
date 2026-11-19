@@ -8,6 +8,7 @@ use App\Models\Employee;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -62,8 +63,20 @@ class EmployeeController extends Controller
             ->with('success', 'Employee added.');
     }
 
-    public function show(Employee $employee): View
+    public function show(Employee $employee): View|RedirectResponse
     {
+        $user = Auth::user();
+
+        if (! $user) {
+            return Redirect::route('login')
+                ->with('error', 'Please log in to view employee details.');
+        }
+
+        if ($user->role !== 'admin' && (int) $user->emp_id !== (int) $employee->emp_id) {
+            return Redirect::route('dashboard')
+                ->with('error', 'You are not authorized to view that employee.');
+        }
+
         $employee->load(['department', 'designation']);
 
         return view('show', [

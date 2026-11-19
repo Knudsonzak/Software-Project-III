@@ -10,8 +10,10 @@ Route::get('/', function () {
 
 Route::post('/login', [AuthController::class, 'login'])->name('signin');
 
-Route::get('/dashboard', [EmployeeController::class, 'index'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [EmployeeController::class, 'index'])->name('dashboard');
 
-Route::resource('employees', EmployeeController::class)
-    ->parameters(['employees' => 'employee']);
+    Route::resource('employees', EmployeeController::class)
+        ->parameters(['employees' => 'employee']);
+});
     
