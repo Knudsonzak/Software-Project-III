@@ -14,7 +14,7 @@
                 <span>Employee<span class="brand-light"> / Management</span></span>
             </a>
             <nav aria-label="Main navigation">
-                <a class="nav-link" href="{{ url('/employees') }}" aria-current="page">Employees</a>
+                <a class="nav-link" href="{{ url('/employees') }}" aria-current="{{ request()->is('employees*') ? 'page' : 'false' }}">Employees</a>
             </nav>
         </div>
     </header>
@@ -23,8 +23,14 @@
         @if (session('success'))
             <div class="notice notice-success" role="status">{{ session('success') }}</div>
         @endif
+        @if (session('error'))
+            <div class="notice notice-error" role="alert">{{ session('error') }}</div>
+        @endif
         @yield('content')
     </main>
-    <footer class="site-footer">Employee management <span aria-hidden="true">&middot;</span> People first, always.</footer>
+
+    <footer class="site-footer">
+        Employee management <span aria-hidden="true">&middot;</span> People first, always.
+    </footer>
 </body>
 </html>

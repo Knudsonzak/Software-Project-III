@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\Designation;
 use App\Models\Employee;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Throwable;
 
 class EmployeeController extends Controller
 {
@@ -35,6 +37,8 @@ class EmployeeController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $this->normalizeNullableIds($request);
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:employees,email'],
@@ -46,7 +50,13 @@ class EmployeeController extends Controller
             'designation_id' => ['nullable', 'integer', 'exists:designations,designation_id'],
         ]);
 
-        Employee::create($data);
+        try {
+            Employee::create($data);
+        } catch (QueryException | Throwable $e) {
+            return Redirect::back()
+                ->withInput()
+                ->with('error', 'Unable to create employee record. Please verify your inputs and try again.');
+        }
 
         return Redirect::route('dashboard')
             ->with('success', 'Employee added.');
@@ -72,6 +82,8 @@ class EmployeeController extends Controller
 
     public function update(Request $request, Employee $employee): RedirectResponse
     {
+        $this->normalizeNullableIds($request);
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -92,7 +104,13 @@ class EmployeeController extends Controller
             unset($data['password']);
         }
 
-        $employee->update($data);
+        try {
+            $employee->update($data);
+        } catch (QueryException | Throwable $e) {
+            return Redirect::back()
+                ->withInput()
+                ->with('error', 'Unable to update employee record. Please verify your inputs and try again.');
+        }
 
         return Redirect::route('dashboard')
             ->with('success', 'Employee updated.');
@@ -100,9 +118,23 @@ class EmployeeController extends Controller
 
     public function destroy(Employee $employee): RedirectResponse
     {
-        $employee->delete();
+        try {
+            $employee->delete();
+        } catch (QueryException | Throwable $e) {
+            return Redirect::route('dashboard')
+                ->with('error', 'Unable to delete employee record because it may be referenced by other records.');
+        }
 
         return Redirect::route('dashboard')
             ->with('success', 'Employee deleted.');
+    }
+
+    private function normalizeNullableIds(Request $request): void
+    {
+        foreach (['department_id', 'designation_id'] as $field) {
+            if ($request->has($field) && $request->input($field) === '') {
+                $request->merge([$field => null]);
+            }
+        }
     }
 }
