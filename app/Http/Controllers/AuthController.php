@@ -27,9 +27,6 @@ class AuthController extends Controller
             return response()->json(['message' => 'Incorrect password or email'], 401);
         }
 
-        $user->last_logged_in = now();
-        $user->save();
-
         if (!$request->expectsJson()) {
             Auth::login($user);
             $request->session()->regenerate();
