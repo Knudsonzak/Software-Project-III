@@ -4,9 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AuthController;
 
-Route::get('/', function () {
-    return view('login');
-});
-
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/dashboard', [EmployeeController::class, 'index']);
+Route::post('/', [AuthController::class, 'login'])->name('login');
+Route::get('/dashboard', [EmployeeController::class, 'index'])->name('dashboard');
+Route::get('/employees/{id}', [EmployeeController::class, 'show'])
+    ->whereNumber('id');
