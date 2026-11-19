@@ -15,10 +15,19 @@ class EmployeeController extends Controller
 {
     public function index(): View
     {
-        return view('employees.index', [
+        return view('dashboard', [
             'employees' => Employee::with(['department', 'designation'])
                 ->orderBy('name')
                 ->get(),
+            'departments' => Department::orderBy('department_name')->get(),
+            'designations' => Designation::orderBy('designation_name')->get(),
+        ]);
+    }
+
+    public function create(): View
+    {
+        return view('create', [
+            'employee' => new Employee(),
             'departments' => Department::orderBy('department_name')->get(),
             'designations' => Designation::orderBy('designation_name')->get(),
         ]);
@@ -30,6 +39,7 @@ class EmployeeController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:employees,email'],
             'phone' => ['nullable', 'string', 'max:20'],
+            'role' => ['required', 'string', Rule::in(['employee', 'admin'])],
             'password' => ['required', 'string', 'min:8'],
             'salary' => ['required', 'numeric', 'min:0', 'max:99999999.99'],
             'department_id' => ['nullable', 'integer', 'exists:departments,department_id'],
@@ -38,8 +48,26 @@ class EmployeeController extends Controller
 
         Employee::create($data);
 
-        return Redirect::route('employees.index')
-            ->with('status', 'Employee added.');
+        return Redirect::route('dashboard')
+            ->with('success', 'Employee added.');
+    }
+
+    public function show(Employee $employee): View
+    {
+        $employee->load(['department', 'designation']);
+
+        return view('show', [
+            'employee' => $employee,
+        ]);
+    }
+
+    public function edit(Employee $employee): View
+    {
+        return view('edit', [
+            'employee' => $employee,
+            'departments' => Department::orderBy('department_name')->get(),
+            'designations' => Designation::orderBy('designation_name')->get(),
+        ]);
     }
 
     public function update(Request $request, Employee $employee): RedirectResponse
@@ -53,6 +81,7 @@ class EmployeeController extends Controller
                 Rule::unique('employees', 'email')->ignore($employee->emp_id, 'emp_id'),
             ],
             'phone' => ['nullable', 'string', 'max:20'],
+            'role' => ['required', 'string', Rule::in(['employee', 'admin'])],
             'password' => ['nullable', 'string', 'min:8'],
             'salary' => ['required', 'numeric', 'min:0', 'max:99999999.99'],
             'department_id' => ['nullable', 'integer', 'exists:departments,department_id'],
@@ -65,15 +94,15 @@ class EmployeeController extends Controller
 
         $employee->update($data);
 
-        return Redirect::route('employees.index')
-            ->with('status', 'Employee updated.');
+        return Redirect::route('dashboard')
+            ->with('success', 'Employee updated.');
     }
 
     public function destroy(Employee $employee): RedirectResponse
     {
         $employee->delete();
 
-        return Redirect::route('employees.index')
-            ->with('status', 'Employee deleted.');
+        return Redirect::route('dashboard')
+            ->with('success', 'Employee deleted.');
     }
 }
