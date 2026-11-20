@@ -3,34 +3,42 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title') | Employee management</title>
+    <title>SmartHR | @yield('title')</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     @vite('resources/css/app.css')
 </head>
 <body>
-    <header class="site-header">
-        <div class="header-inner">
-            <a class="brand" href="{{ url('/employees') }}">
-                <span class="brand-mark" aria-hidden="true">E</span>
-                <span>Employee<span class="brand-light"> / Management</span></span>
-            </a>
-            <nav aria-label="Main navigation">
-                <a class="nav-link" href="{{ url('/employees') }}" aria-current="{{ request()->is('employees*') ? 'page' : 'false' }}">Employees</a>
-            </nav>
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <aside class="col-md-3 col-lg-2 sidebar p-4">
+                <a class="brand" href="{{ url('/dashboard') }}"><span aria-hidden="true">✦</span> SmartHR</a>
+                @auth
+                    <div class="sidebar-user">{{ auth()->user()->name }}</div>
+                @endauth
+                <nav class="sidebar-nav" aria-label="Main navigation">
+                    <a class="sidebar-link {{ request()->is('dashboard') ? 'active' : '' }}" href="{{ url('/dashboard') }}" @if (request()->is('dashboard')) aria-current="page" @endif><span aria-hidden="true">▦</span> Dashboard</a>
+                    <a class="sidebar-link {{ request()->is('employees*') ? 'active' : '' }}" href="{{ url('/employees') }}" @if (request()->is('employees*')) aria-current="page" @endif><span aria-hidden="true">♙</span> Employees</a>
+                    <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">◷</span> Attendance</span>
+                    <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">▤</span> Payroll</span>
+                    <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">◫</span> Leave requests</span>
+                </nav>
+                <div class="workspace-label">{{ auth()->check() ? strtoupper(auth()->user()->role) : 'ADMIN' }} WORKSPACE</div>
+            </aside>
+            <main class="col-md-9 col-lg-10 main-content">
+                <div class="page-shell">
+                    @if (session('success'))
+                        <div class="notice notice-success" role="status">{{ session('success') }}</div>
+                    @endif
+                    @if (session('error'))
+                        <div class="notice notice-error" role="alert">{{ session('error') }}</div>
+                    @endif
+                    @yield('content')
+                </div>
+                <footer class="site-footer">SmartHR <span aria-hidden="true">&middot;</span> People first, always.</footer>
+            </main>
         </div>
-    </header>
-
-    <main class="page-shell">
-        @if (session('success'))
-            <div class="notice notice-success" role="status">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-            <div class="notice notice-error" role="alert">{{ session('error') }}</div>
-        @endif
-        @yield('content')
-    </main>
-
-    <footer class="site-footer">
-        Employee management <span aria-hidden="true">&middot;</span> People first, always.
-    </footer>
+    </div>
+    @yield('scripts')
 </body>
 </html>
