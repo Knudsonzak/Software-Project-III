@@ -22,8 +22,12 @@
                 <span class="badge">{{ ucfirst($employee->role) }}</span>
             </div>
         </div>
+
         <div class="details-section">
-            <div class="section-title"><h3>Account information</h3><p>Personal and contact details for this employee.</p></div>
+            <div class="section-title">
+                <h3>Account information</h3>
+                <p>Personal and contact details for this employee.</p>
+            </div>
             <dl class="details-grid">
                 <div><dt>Employee ID</dt><dd>{{ $employee->emp_id }}</dd></div>
                 <div><dt>Full name</dt><dd>{{ $employee->name }}</dd></div>
@@ -32,19 +36,26 @@
                 <div><dt>Role</dt><dd>{{ ucfirst($employee->role) }}</dd></div>
             </dl>
         </div>
+
         <div class="details-section">
-            <div class="section-title"><h3>Employment information</h3><p>Details associated with this employee's position.</p></div>
+            <div class="section-title">
+                <h3>Employment information</h3>
+                <p>Details associated with this employee's position.</p>
+            </div>
             <dl class="details-grid">
-                <div><dt>Department ID</dt><dd>{{ $employee->department_id ?? 'Not assigned' }}</dd></div>
-                <div><dt>Designation ID</dt><dd>{{ $employee->designation_id ?? 'Not assigned' }}</dd></div>
+                <div><dt>Department</dt><dd>{{ $employee->department?->department_name ?? ($employee->department_id ? 'Department #' . $employee->department_id : 'Not assigned') }}</dd></div>
+                <div><dt>Designation</dt><dd>{{ $employee->designation?->designation_name ?? ($employee->designation_id ? 'Designation #' . $employee->designation_id : 'Not assigned') }}</dd></div>
                 <div><dt>Salary</dt><dd>{{ number_format((float) $employee->salary, 2) }}</dd></div>
             </dl>
         </div>
     </section>
 
     <section class="danger-zone" aria-labelledby="danger-title">
-        <div><h2 id="danger-title">Delete employee</h2><p>Permanently remove this employee account. This action cannot be undone.</p></div>
-        <form action="{{ url('/employees/' . $employee->emp_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this employee account? This action cannot be undone.')">
+        <div>
+            <h2 id="danger-title">Delete employee</h2>
+            <p>Permanently remove this employee account. This action cannot be undone.</p>
+        </div>
+        <form action="{{ url('/employees/' . $employee->emp_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this employee account? This action cannot be undone.');">
             @csrf
             @method('DELETE')
             <button class="button button-danger" type="submit">Delete employee</button>

@@ -1,14 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-<<<<<<< HEAD
-})->name('main');
-=======
-});
+    return view('login');
+})->name('login');
 
-Route::get('/dashboard', [EmployeeController::class, 'index']);
->>>>>>> 1c9bfdd604d5c6484f8a660028117008f493ac7c
+Route::post('/login', [AuthController::class, 'login'])->name('signin');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [EmployeeController::class, 'index'])->name('dashboard');
+
+    Route::resource('employees', EmployeeController::class)
+        ->parameters(['employees' => 'employee']);
+});
+    
