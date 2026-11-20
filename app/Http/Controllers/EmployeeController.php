@@ -18,7 +18,7 @@ class EmployeeController extends Controller
 {
     public function index(): View
     {
-        return view('dashboard', [
+        return view('employees', [
             'employees' => Employee::with(['department', 'designation'])
                 ->orderBy('name')
                 ->get(),
