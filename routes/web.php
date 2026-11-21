@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeePortalController;
+use App\Http\Controllers\TimeLogController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLeaveController;
 
@@ -20,6 +21,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('signin');
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/clock-in', [TimeLogController::class, 'clockIn'])->name('clock-in');
+    Route::post('/clock-out', [TimeLogController::class, 'clockOut'])->name('clock-out');
 
     Route::get('/dashboard', function () {
         return auth()->user()->role === 'admin'
