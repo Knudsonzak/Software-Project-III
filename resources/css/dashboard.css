@@ -1,0 +1,21 @@
+@import "./base.css";
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+th { padding: 13px 28px; background: #f8fafd; color: #8390a3; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+td { padding: 19px 28px; border-top: 1px solid #edf0f5; color: #5c6b80; font-size: 13px; }
+.employee-cell { display: flex; align-items: center; gap: 13px; min-width: 210px; }
+.employee-name { display: block; color: #233149; font-size: 14px; font-weight: 700; text-decoration: none; }
+.employee-name:hover { color: #1b4297; text-decoration: underline; }
+.secondary-text { display: block; margin-top: 5px; color: #8a97a8; font-size: 12px; }
+.table-action { text-align: right; white-space: nowrap; }
+.action-buttons { display: flex; gap: 8px; align-items: center; }
+.action-buttons a, .action-buttons form { display: inline; margin: 0; }
+.action-buttons a { color: #3564bd; font-weight: 700; text-decoration: none; font-size: 12px; padding: 6px 10px; }
+.action-buttons a:hover { color: #1b4297; text-decoration: underline; }
+.action-buttons button { background: #b53535; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; font-weight: 700; font-size: 12px; cursor: pointer; }
+.action-buttons button:hover { background: #8b2626; }
+.empty-state { padding: 60px 28px; text-align: center; }
+.empty-state strong, .empty-state span { display: block; }
+.empty-state strong { color: #233149; font-size: 15px; }
+.empty-state span { margin: 8px 0 20px; color: #7a8799; }

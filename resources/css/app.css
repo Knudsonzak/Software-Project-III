@@ -1,4 +1,9 @@
 @import 'tailwindcss';
+@import './dashboard.css';
+@import './show.css';
+@import './create.css';
+@import './edit.css';
+@import './employee-dashboard.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
