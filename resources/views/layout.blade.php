@@ -12,16 +12,22 @@
     <div class="container-fluid p-0">
         <div class="row g-0">
             <aside class="col-md-3 col-lg-2 sidebar p-4">
-                <a class="brand" href="{{ route('dashboard') }}"><span aria-hidden="true">✦</span> SmartHR</a>
+                <a class="brand" href="{{ url('/dashboard') }}"><span aria-hidden="true">✦</span> SmartHR</a>
                 @auth
                     <div class="sidebar-user">{{ auth()->user()->name }}</div>
                 @endauth
                 <nav class="sidebar-nav" aria-label="Main navigation">
-                    <a class="sidebar-link {{ request()->is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}" @if (request()->is('dashboard')) aria-current="page" @endif><span aria-hidden="true">▦</span> Dashboard</a>
+                    <a class="sidebar-link {{ request()->is('dashboard') ? 'active' : '' }}" href="{{ url('/dashboard') }}" @if (request()->is('dashboard')) aria-current="page" @endif><span aria-hidden="true">▦</span> Dashboard</a>
                     <a class="sidebar-link {{ request()->is('employees*') ? 'active' : '' }}" href="{{ url('/employees') }}" @if (request()->is('employees*')) aria-current="page" @endif><span aria-hidden="true">♙</span> Employees</a>
-                    <a class="sidebar-link {{ request()->is('clock') ? 'active' : '' }}" href="{{ route('clock') }}" @if (request()->is('clock')) aria-current="page" @endif><span aria-hidden="true">◷</span> Attendance</a>
+                    <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">◷</span> Attendance</span>
                     <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">▤</span> Payroll</span>
                     <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">◫</span> Leave requests</span>
+                    @auth
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="sidebar-link sidebar-logout" type="submit"><span aria-hidden="true">↪</span> Log out</button>
+                        </form>
+                    @endauth
                 </nav>
                 <div class="workspace-label">{{ auth()->check() ? strtoupper(auth()->user()->role) : 'ADMIN' }} WORKSPACE</div>
             </aside>

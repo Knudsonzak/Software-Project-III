@@ -91,6 +91,8 @@ The application will be available at `http://localhost:8000`
 
 ### Access Employee Features
 - After login, employees can view their dashboard at `/dashboard`
+- The employee dashboard shows only the signed-in employee's time logs, leave requests, and payroll records. The clock-in/out button is not yet available; recorded breaks are deducted from displayed hours, and overnight sessions are attributed to their clock-in date.
+- Payslip dates reflect when payroll records were created; the current payroll schema does not record a payroll period.
 - Manage their profile information
 - Submit leave requests
 - View payroll information
