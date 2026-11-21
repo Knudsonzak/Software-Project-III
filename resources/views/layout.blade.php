@@ -22,6 +22,12 @@
                     <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">◷</span> Attendance</span>
                     <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">▤</span> Payroll</span>
                     <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">◫</span> Leave requests</span>
+                    @auth
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="sidebar-link sidebar-logout" type="submit"><span aria-hidden="true">↪</span> Log out</button>
+                        </form>
+                    @endauth
                 </nav>
                 <div class="workspace-label">{{ auth()->check() ? strtoupper(auth()->user()->role) : 'ADMIN' }} WORKSPACE</div>
             </aside>

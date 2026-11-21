@@ -42,6 +42,24 @@ class LoginTest extends TestCase
         $this->assertGuest('web');
     }
 
+    public function test_employee_can_log_out_from_the_sidebar(): void
+    {
+        $employee = $this->createEmployee();
+
+        $this->actingAs($employee, 'web')->get(route('dashboard'))
+            ->assertOk()
+            ->assertSee('Log out')
+            ->assertSee(route('logout'));
+
+        $this->withSession(['logout_test' => 'present'])
+            ->post(route('logout'))
+            ->assertRedirect(route('login'))
+            ->assertSessionMissing('logout_test');
+
+        $this->assertGuest('web');
+        $this->get(route('dashboard'))->assertRedirect(route('login'));
+    }
+
     public function test_json_login_returns_an_employee_token(): void
     {
         $employee = $this->createEmployee();

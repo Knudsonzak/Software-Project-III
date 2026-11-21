@@ -97,7 +97,7 @@ class AdminDashboardTest extends TestCase
 
         $this->actingAs($employee)->get('/dashboard')
             ->assertOk()
-            ->assertSee('Employee directory')
+            ->assertSee('My leave requests')
             ->assertDontSee('Net payroll this month');
     }
 
