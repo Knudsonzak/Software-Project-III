@@ -17,7 +17,7 @@
             <nav class="employee-nav" aria-label="Employee navigation">
                 <a class="employee-nav-item is-active" href="{{ route('dashboard') }}" aria-current="page"><span aria-hidden="true">▦</span> Dashboard</a>
                 <span class="employee-nav-item is-disabled"><span aria-hidden="true">◷</span> Timesheets</span>
-                <span class="employee-nav-item is-disabled"><span aria-hidden="true">◫</span> Leave requests</span>
+                <a class="employee-nav-item {{ request()->is('leaves*') ? 'is-active' : '' }}" href="{{ route('leaves.index') }}" @if (request()->is('leaves*')) aria-current="page" @endif><span aria-hidden="true">◫</span> Leave requests</a>
                 <span class="employee-nav-item is-disabled"><span aria-hidden="true">▤</span> Payroll</span>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -98,7 +98,10 @@
                             <h2 id="leave-title">My leave requests</h2>
                             <p>Recent requests</p>
                         </div>
-                        <span class="employee-count">{{ $pendingLeaves }} pending</span>
+                        <div class="employee-leave-actions">
+                            <span class="employee-count">{{ $pendingLeaves }} pending</span>
+                            <a class="employee-leave-link" href="{{ route('leaves.index') }}">Request leave</a>
+                        </div>
                     </div>
                     <div class="employee-table-wrap">
                         <table class="employee-table">

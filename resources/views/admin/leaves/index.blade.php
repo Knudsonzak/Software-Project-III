@@ -10,6 +10,7 @@
             <p class="page-description">Review, approve, or reject submitted employee leave requests.</p>
         </div>
         <div class="filter-links">
+            <a class="button button-outline" href="{{ route('leaves.index') }}">Request leave</a>
             <a class="button {{ empty($statusFilter) ? 'button-primary' : 'button-outline' }}" href="{{ url('/admin/leaves') }}">All</a>
             <a class="button {{ ($statusFilter ?? '') === 'pending' ? 'button-primary' : 'button-outline' }}" href="{{ url('/admin/leaves?status=pending') }}">Pending</a>
             <a class="button {{ ($statusFilter ?? '') === 'approved' ? 'button-primary' : 'button-outline' }}" href="{{ url('/admin/leaves?status=approved') }}">Approved</a>

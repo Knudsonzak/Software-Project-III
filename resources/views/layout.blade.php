@@ -21,7 +21,13 @@
                     <a class="sidebar-link {{ request()->is('employees*') ? 'active' : '' }}" href="{{ url('/employees') }}" @if (request()->is('employees*')) aria-current="page" @endif><span aria-hidden="true">♙</span> Employees</a>
                     <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">◷</span> Attendance</span>
                     <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">▤</span> Payroll</span>
-                    <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">◫</span> Leave requests</span>
+                    @if (auth()->user()?->role === 'admin')
+
+                        <!-- request()->('url string') this returns a boolean if the URL path has admin/leaves{anything after} * means anything can go after like {/admin/leaves or /admin/leaves/123/approve or also /admin/leaves?status=pending } -->
+                        <a class="sidebar-link {{ request()->is('admin/leaves*') ? 'active' : '' }}" href="{{ route('admin.leaves.index') }}" @if (request()->is('admin/leaves*')) aria-current="page" @endif><span aria-hidden="true">◫</span> Leave requests</a>
+                    @else
+                        <a class="sidebar-link {{ request()->is('leaves*') ? 'active' : '' }}" href="{{ route('leaves.index') }}" @if (request()->is('leaves*')) aria-current="page" @endif><span aria-hidden="true">◫</span> Leave requests</a>
+                    @endif
                     @auth
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

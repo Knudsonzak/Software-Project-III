@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLeaveController;
 use App\Http\Controllers\LeaveRequestController;
 
-Route::get('/admin/leaves', [AdminLeaveController::class, 'index'])->name('admin.leaves.index');
-Route::patch('/admin/leaves/{leaveForm}/approve', [AdminLeaveController::class, 'approve'])->name('admin.leaves.approve');
-Route::patch('/admin/leaves/{leaveForm}/reject', [AdminLeaveController::class, 'reject'])->name('admin.leaves.reject');
-Route::patch('/admin/leaves/{leaveForm}/status', [AdminLeaveController::class, 'updateStatus'])->name('admin.leaves.status');
-
-
 Route::get('/', function () {
     return view('login');
 })->name('login');
@@ -25,6 +19,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/clock-in', [TimeLogController::class, 'clockIn'])->name('clock-in');
     Route::post('/clock-out', [TimeLogController::class, 'clockOut'])->name('clock-out');
+    Route::get('/admin/leaves', [AdminLeaveController::class, 'index'])->name('admin.leaves.index');
+    Route::patch('/admin/leaves/{leaveForm}/approve', [AdminLeaveController::class, 'approve'])->name('admin.leaves.approve');
+    Route::patch('/admin/leaves/{leaveForm}/reject', [AdminLeaveController::class, 'reject'])->name('admin.leaves.reject');
+    Route::patch('/admin/leaves/{leaveForm}/status', [AdminLeaveController::class, 'updateStatus'])->name('admin.leaves.status');
 
     Route::get('/dashboard', function () {
         return auth()->user()->role === 'admin'

@@ -9,7 +9,10 @@
             <h1 class="fw-bold mb-1">Workforce Dashboard</h1>
             <div class="small-muted">Live database overview &middot; {{ now()->format('F j, Y') }}</div>
         </div>
-        <span class="pill">Administrator</span>
+        <div class="admin-dashboard-actions">
+            <a class="button button-outline" href="{{ route('leaves.index') }}">Request leave</a>
+            <a class="button button-primary" href="{{ route('admin.leaves.index') }}">Review leave requests</a>
+        </div>
     </div>
 
     <div class="row g-3 mb-4">
