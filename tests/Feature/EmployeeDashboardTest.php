@@ -50,15 +50,66 @@ class EmployeeDashboardTest extends TestCase
         Carbon::setTestNow();
     }
 
-    public function test_clock_control_is_disabled_and_does_not_create_time_logs(): void
+    public function test_employee_can_clock_in_and_out_and_dashboard_shows_a_live_timer(): void
+    {
+        Carbon::setTestNow('2026-11-20 08:00:00');
+        $employee = $this->employee('employee@example.com');
+
+        $this->actingAs($employee)
+            ->post(route('clock-in'))
+            ->assertRedirect(route('dashboard'));
+
+        $timeLog = DB::table('time_logs')->where('emp_id', $employee->emp_id)->first();
+        $this->assertNotNull($timeLog);
+        $this->assertNull($timeLog->clock_out);
+
+        $this->get(route('dashboard'))
+            ->assertOk()
+            ->assertSee('Clock out')
+            ->assertSee('id="session-stopwatch"', false)
+            ->assertSee('data-clock-in="2026-11-20T08:00:00', false)
+            ->assertSee('setInterval(updateStopwatch, 1000)');
+
+        Carbon::setTestNow('2026-11-20 10:30:00');
+
+        $this->post(route('clock-out'))
+            ->assertRedirect(route('dashboard'));
+
+        $this->assertDatabaseHas('time_logs', [
+            'id' => $timeLog->id,
+            'clock_out' => '2026-11-20 10:30:00',
+            'hours' => 2.50,
+        ]);
+        $this->get(route('dashboard'))
+            ->assertOk()
+            ->assertSee('Clock in');
+
+        Carbon::setTestNow();
+    }
+
+    public function test_employee_cannot_clock_in_twice_or_clock_out_without_an_open_time_log(): void
     {
         $employee = $this->employee('employee@example.com');
 
-        $this->actingAs($employee)->get(route('dashboard'))
-            ->assertOk()
-            ->assertSee('class="employee-clock-button" type="button" disabled', false)
-            ->assertSee('Clock in and out is not available yet.');
-        $this->post('/dashboard/clock')->assertNotFound();
+        $this->actingAs($employee)
+            ->post(route('clock-out'))
+            ->assertSessionHas('error', 'You are not currently clocked in.');
+
+        $this->post(route('clock-in'))->assertRedirect(route('dashboard'));
+        $this->post(route('clock-in'))
+            ->assertSessionHas('error', 'You are already clocked in.');
+
+        $this->assertDatabaseCount('time_logs', 1);
+    }
+
+    public function test_admin_cannot_use_employee_clock_controls(): void
+    {
+        $admin = $this->employee('admin@example.com', 'admin');
+
+        $this->actingAs($admin)
+            ->post(route('clock-in'))
+            ->assertForbidden();
+
         $this->assertDatabaseCount('time_logs', 0);
     }
 

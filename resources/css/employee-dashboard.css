@@ -20,10 +20,17 @@
 .employee-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
 .employee-header h1 { margin: 0 0 5px; font-size: clamp(24px, 2.2vw, 30px); font-weight: 600; letter-spacing: -.04em; }
 .employee-header p, .employee-card-heading p, .employee-subtle { margin: 0; color: #929ba8; font-size: 12px; }
-.employee-clock-button { padding: 11px 17px; border: 0; border-radius: 8px; background: #212434; color: #fff; font-size: 12px; font-weight: 600; cursor: not-allowed; }
+.employee-header form { margin: 0; }
+.employee-clock-button { padding: 11px 17px; border: 0; border-radius: 8px; background: #2672ed; color: #fff; font-size: 12px; font-weight: 600; cursor: pointer; transition: background .15s ease; }
+.employee-clock-button:hover { background: #155dcc; }
+.employee-clock-button.is-clocked-in { background: #bf3d45; }
+.employee-clock-button.is-clocked-in:hover { background: #a52e37; }
 .employee-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 16px; align-items: stretch; }
 .employee-card { min-width: 0; padding: 22px; border: 1px solid #e8ebf0; border-radius: 12px; background: #fff; box-shadow: 0 3px 8px rgba(26, 42, 63, .035); }
 .employee-card-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 18px; }
+.employee-leave-actions { display: flex; align-items: center; gap: 8px; }
+.employee-leave-link { color: #2672ed; font-size: 11px; font-weight: 650; text-decoration: none; white-space: nowrap; }
+.employee-leave-link:hover { text-decoration: underline; }
 .employee-card-heading h2 { margin: 0 0 4px; font-size: 15px; font-weight: 650; }
 .employee-legend { display: flex; align-items: center; gap: 6px; color: #929ba8; font-size: 11px; white-space: nowrap; }
 .employee-legend span { width: 9px; height: 9px; border-radius: 3px; background: #2672ed; }
@@ -43,7 +50,7 @@
 .employee-gauge::before { position: absolute; inset: 0 0 auto; height: 200px; border: 14px solid #e5efff; border-top-color: #2672ed; border-left-color: #2672ed; border-radius: 50%; content: ""; transform: rotate(45deg); }
 .employee-gauge-center { position: absolute; inset: 55px 0 auto; text-align: center; }
 .employee-gauge-center strong, .employee-gauge-center span { display: block; }
-.employee-gauge-center strong { font-size: 25px; font-weight: 500; line-height: 1; }
+.employee-gauge-center strong { font-size: 21px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1; }
 .employee-gauge-center span { margin-top: 6px; color: #929ba8; font-size: 11px; }
 .employee-tracker-details { display: flex; justify-content: space-between; gap: 12px; margin: 14px 0 8px; color: #727d8a; font-size: 11px; }
 .employee-tracker-details strong { color: #303745; text-align: right; }
@@ -69,4 +76,5 @@
     .employee-header { align-items: flex-start; }
     .employee-card { padding: 18px; }
     .employee-bar-chart { gap: 5px; }
+    .employee-leave-actions { align-items: flex-end; flex-direction: column; }
 }

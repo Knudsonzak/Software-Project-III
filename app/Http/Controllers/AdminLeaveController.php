@@ -13,8 +13,10 @@ use Throwable;
 
 class AdminLeaveController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request)
     {
+        abort_unless($request->user()?->role === 'admin', 403);
+
         $statusFilter = $request->query('status');
         $allowedStatuses = ['pending', 'approved', 'rejected'];
 
@@ -34,18 +36,24 @@ class AdminLeaveController extends Controller
         ]);
     }
 
-    public function approve(LeaveForm $leaveForm): RedirectResponse
+    public function approve(LeaveForm $leaveForm)
     {
+        abort_unless(request()->user()?->role === 'admin', 403);
+
         return $this->setStatus($leaveForm, 'approved', 'Leave request approved.');
     }
 
-    public function reject(LeaveForm $leaveForm): RedirectResponse
+    public function reject(LeaveForm $leaveForm)
     {
+        abort_unless(request()->user()?->role === 'admin', 403);
+
         return $this->setStatus($leaveForm, 'rejected', 'Leave request rejected.');
     }
 
-    public function updateStatus(Request $request, LeaveForm $leaveForm): RedirectResponse
+    public function updateStatus(Request $request, LeaveForm $leaveForm)
     {
+        abort_unless($request->user()?->role === 'admin', 403);
+
         $validated = $request->validate([
             'status' => ['required', 'string', Rule::in(['pending', 'approved', 'rejected'])],
         ]);
@@ -59,7 +67,7 @@ class AdminLeaveController extends Controller
         return $this->setStatus($leaveForm, $validated['status'], $message);
     }
 
-    private function setStatus(LeaveForm $leaveForm, string $status, string $successMessage): RedirectResponse
+    private function setStatus(LeaveForm $leaveForm, string $status, string $successMessage)
     {
         try {
             $leaveForm->update(['status' => $status]);
