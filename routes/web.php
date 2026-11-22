@@ -6,11 +6,13 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeePortalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLeaveController;
+use App\Http\Controllers\LeaveRequestController;
 
 Route::get('/admin/leaves', [AdminLeaveController::class, 'index'])->name('admin.leaves.index');
 Route::patch('/admin/leaves/{leaveForm}/approve', [AdminLeaveController::class, 'approve'])->name('admin.leaves.approve');
 Route::patch('/admin/leaves/{leaveForm}/reject', [AdminLeaveController::class, 'reject'])->name('admin.leaves.reject');
 Route::patch('/admin/leaves/{leaveForm}/status', [AdminLeaveController::class, 'updateStatus'])->name('admin.leaves.status');
+
 
 Route::get('/', function () {
     return view('login');
@@ -29,4 +31,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('employees', EmployeeController::class)
         ->parameters(['employees' => 'employee']);
+    Route::get('/leaves', [LeaveRequestController::class, 'index'])->name('leaves.index');
+    Route::post('/leaves', [LeaveRequestController::class, 'store'])->name('leaves.store');
 });
