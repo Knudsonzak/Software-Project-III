@@ -1,0 +1,55 @@
+.leave-page { max-width: 1080px; }
+.leave-page .page-heading { margin-bottom: 24px; }
+.leave-form-card, .leave-history-card { padding: 26px 30px; border-color: #e8ebf2; border-radius: 16px; box-shadow: 0 8px 28px rgba(27, 46, 79, .035); }
+.leave-form-card { margin-bottom: 20px; }
+.leave-section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+.leave-section-heading h2 { margin: 0 0 6px; color: #17243b; font-size: 17px; font-weight: 750; letter-spacing: -.025em; }
+.leave-section-heading p { margin: 0; color: #75839a; font-size: 13px; line-height: 1.5; }
+.leave-heading-icon { display: grid; flex: 0 0 auto; place-items: center; width: 38px; height: 38px; border-radius: 11px; background: #f0efff; color: #655cf5; }
+.leave-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 20px; }
+.leave-field { min-width: 0; }
+.leave-field-wide { grid-column: 1 / -1; }
+.leave-field label { display: block; margin: 0 0 8px; color: #34445c; font-size: 12px; font-weight: 700; }
+.leave-field label span { color: #8b97a8; font-weight: 500; }
+.leave-field input, .leave-field select, .leave-field textarea { display: block; width: 100%; min-height: 45px; padding: 11px 13px; border: 1px solid #dfe5ee; border-radius: 8px; background: #fff; color: #26364e; font-size: 13px; transition: border-color .15s ease, box-shadow .15s ease; }
+.leave-field textarea { min-height: 104px; resize: vertical; line-height: 1.5; }
+.leave-field input::placeholder, .leave-field textarea::placeholder { color: #a0a9b7; }
+.leave-field input:focus, .leave-field select:focus, .leave-field textarea:focus { border-color: #817af7; outline: 0; box-shadow: 0 0 0 3px rgba(101, 92, 245, .12); }
+.leave-form-footer { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 21px; padding-top: 19px; border-top: 1px solid #edf0f5; }
+.leave-form-footer p { margin: 0; color: #8490a1; font-size: 12px; line-height: 1.5; }
+.leave-form-footer .button { background: #655cf5; box-shadow: 0 4px 10px rgba(101, 92, 245, .17); }
+.leave-form-footer .button:hover { background: #5148dc; }
+.leave-form-footer .button span { margin-left: 4px; font-size: 16px; }
+.leave-history-card { padding-bottom: 4px; }
+.leave-history-card .leave-section-heading { align-items: center; margin-bottom: 18px; }
+.leave-request-count { padding: 6px 10px; border-radius: 999px; background: #f0efff; color: #534acb; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.leave-table { width: 100%; border-collapse: collapse; text-align: left; }
+.leave-table th { padding: 12px 14px; background: #f8f9fd; color: #8290a4; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.leave-table th:first-child { border-radius: 7px 0 0 7px; }
+.leave-table th:last-child { border-radius: 0 7px 7px 0; }
+.leave-table td { padding: 15px 14px; border-top: 1px solid #edf0f5; color: #66748a; font-size: 12px; line-height: 1.5; vertical-align: middle; }
+.leave-table .leave-type-cell { color: #29374e; font-weight: 700; }
+.leave-status { display: inline-block; padding: 5px 9px; border-radius: 999px; background: #edf3ff; color: #345fac; font-size: 10px; font-weight: 750; }
+.leave-status-approved { background: #e8f7ef; color: #28784a; }
+.leave-status-rejected { background: #fff0f0; color: #a52e2e; }
+.leave-status-pending { background: #fff5df; color: #926309; }
+.leave-table .leave-empty-state { padding: 36px 14px; text-align: center; }
+.leave-empty-state > * { display: block; }
+.leave-empty-icon { margin-bottom: 9px; color: #a4afbf; font-size: 23px; }
+.leave-empty-state strong { margin-bottom: 5px; color: #34445c; font-size: 13px; }
+.leave-empty-state span:last-child { color: #8490a1; font-size: 12px; }
+.leave-page .notice-error { margin-bottom: 18px; }
+
+@media (max-width: 700px) {
+    .leave-form-card, .leave-history-card { padding: 21px 18px; }
+    .leave-table { min-width: 650px; }
+    .leave-form-footer { align-items: flex-start; flex-direction: column; }
+    .leave-form-footer .button { width: 100%; }
+}
+
+@media (max-width: 520px) {
+    .leave-form-grid { grid-template-columns: 1fr; gap: 15px; }
+    .leave-field-wide { grid-column: auto; }
+    .leave-section-heading h2 { font-size: 16px; }
+    .leave-history-card .leave-section-heading { align-items: flex-start; }
+}
