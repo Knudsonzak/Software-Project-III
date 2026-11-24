@@ -80,7 +80,7 @@ class AdminDashboardTest extends TestCase
             ->assertSee('Workforce Dashboard')
             ->assertSee('Total employees')
             ->assertSee('$5,000.00')
-            ->assertSee('0 not clocked in today')
+            ->assertSee('Absent today')
             ->assertSee('Engineering')
             ->assertSee('Taylor Employee');
     }

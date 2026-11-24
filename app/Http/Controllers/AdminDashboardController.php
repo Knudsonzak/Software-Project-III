@@ -16,6 +16,7 @@ class AdminDashboardController extends Controller
             ->whereDate('clock_in', $today)
             ->distinct()
             ->count('time_logs.emp_id');
+        $absent = max(0, $employeeCount - $present);
 
         $attendanceTrend = collect(range(6, 0))->map(function ($daysAgo) {
             $date = today()->subDays($daysAgo);
@@ -46,7 +47,7 @@ class AdminDashboardController extends Controller
         return view('dashboard', [
             'employeeCount' => $employeeCount,
             'present' => $present,
-            'absent' => max(0, $employeeCount - $present),
+            'absent' => $absent,
             'pendingLeaves' => DB::table('leave_forms')->where('status', 'pending')->count(),
             'monthPayroll' => (float) DB::table('payrolls')
                 ->whereYear('created_at', $today->year)

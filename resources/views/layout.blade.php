@@ -19,7 +19,11 @@
                 <nav class="sidebar-nav" aria-label="Main navigation">
                     <a class="sidebar-link {{ request()->is('dashboard') ? 'active' : '' }}" href="{{ url('/dashboard') }}" @if (request()->is('dashboard')) aria-current="page" @endif><span aria-hidden="true">▦</span> Dashboard</a>
                     <a class="sidebar-link {{ request()->is('employees*') ? 'active' : '' }}" href="{{ url('/employees') }}" @if (request()->is('employees*')) aria-current="page" @endif><span aria-hidden="true">♙</span> Employees</a>
-                    <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">◷</span> Attendance</span>
+                    @if (auth()->user()?->role === 'admin')
+                        <a class="sidebar-link {{ request()->is('admin/attendance*') ? 'active' : '' }}" href="{{ route('admin.attendance.index') }}" @if (request()->is('admin/attendance*')) aria-current="page" @endif><span aria-hidden="true">◷</span> Attendance</a>
+                    @else
+                        <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">◷</span> Attendance</span>
+                    @endif
                     <span class="sidebar-link sidebar-link-muted"><span aria-hidden="true">▤</span> Payroll</span>
                     @if (auth()->user()?->role === 'admin')
 

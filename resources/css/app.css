@@ -4,6 +4,7 @@
 @import './create.css';
 @import './edit.css';
 @import './leave-requests.css';
+@import './admin-attendance.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

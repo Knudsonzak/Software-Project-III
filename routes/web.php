@@ -24,6 +24,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/admin/leaves/{leaveForm}/reject', [AdminLeaveController::class, 'reject'])->name('admin.leaves.reject');
     Route::patch('/admin/leaves/{leaveForm}/status', [AdminLeaveController::class, 'updateStatus'])->name('admin.leaves.status');
 
+    Route::middleware('admin')->group(function () {
+        Route::get('/admin/attendance', [TimeLogController::class, 'index'])->name('admin.attendance.index');
+    });
+
     Route::get('/dashboard', function () {
         return auth()->user()->role === 'admin'
             ? app(AdminDashboardController::class)->index()

@@ -10,12 +10,13 @@
             <div class="small-muted">Live database overview &middot; {{ now()->format('F j, Y') }}</div>
         </div>
         <div class="admin-dashboard-actions">
+            <a class="button button-outline" href="{{ route('admin.attendance.index') }}">View attendance</a>
             <a class="button button-outline" href="{{ route('leaves.index') }}">Request leave</a>
             <a class="button button-primary" href="{{ route('admin.leaves.index') }}">Review leave requests</a>
         </div>
     </div>
 
-    <div class="row g-3 mb-4">
+    <div class="row g-3 mb-4 admin-metrics">
         <div class="col-sm-6 col-xl-3">
             <div class="stat">
                 <div class="hint">Total employees</div>
@@ -27,7 +28,14 @@
             <div class="stat">
                 <div class="hint">Present today</div>
                 <div class="num">{{ $present }}</div>
-                <div class="hint">{{ $absent }} not clocked in today</div>
+                <div class="hint">Employees with a clock-in today</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat">
+                <div class="hint">Absent today</div>
+                <div class="num">{{ $absent }}</div>
+                <div class="hint">Employees not clocked in today</div>
             </div>
         </div>
         <div class="col-sm-6 col-xl-3">
